@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ShieldCheck,
   Compass,
@@ -10,7 +10,6 @@ import {
   Layers,
   Award,
   Truck,
-  RotateCcw,
   Sparkles,
   ArrowRight,
   CheckCircle2,
@@ -19,16 +18,8 @@ import {
   Gauge,
   Flame,
   Users,
+  Check,
 } from 'lucide-react'
-
-const TyreScene = dynamic(() => import('@/components/3d/TyreScene'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="size-64 animate-pulse rounded-full border-[36px] border-white/5 border-t-race/60" />
-    </div>
-  ),
-})
 
 // 3D Tilt Card component
 function AboutTiltCard({
@@ -119,7 +110,7 @@ function AboutTiltCard({
   )
 }
 
-// 5 Technical Anatomy Layers
+// 5 Technical Anatomy Layers with Real Photographs
 const tyreAnatomy = [
   {
     id: 'silica',
@@ -129,6 +120,8 @@ const tyreAnatomy = [
     description:
       'High-dispersion silica compound delivering razor-sharp wet braking, reduced rolling resistance, and heat endurance under blistering Australian tarmac conditions.',
     specs: '60,000+ km longevity · Wet Grip Rating: A',
+    image: '/images/hero-tyre.jpg',
+    tag: 'Macro Tread Grip & Compound',
   },
   {
     id: 'steel',
@@ -138,6 +131,8 @@ const tyreAnatomy = [
     description:
       'Dual high-tensile brass-coated steel belts providing structural rigidity, high-speed centrifugal resistance, and puncture shielding against road debris.',
     specs: 'High Lateral G-Stability · Y-Speed Rated (300 km/h)',
+    image: '/images/brand-velocity.jpg',
+    tag: 'High-Tensile Steel Radial Structure',
   },
   {
     id: 'sidewall',
@@ -147,6 +142,8 @@ const tyreAnatomy = [
     description:
       'Reinforced multi-ply casing engineered to absorb heavy outback potholes, gutter rash, and rugged gravel impacts without internal ply separation.',
     specs: 'Cut & Chip Resistant Rubber · Anti-Pinch Shielding',
+    image: '/images/brand-grit.jpg',
+    tag: 'Rugged Anti-Puncture Sidewall',
   },
   {
     id: 'nylon',
@@ -156,6 +153,8 @@ const tyreAnatomy = [
     description:
       'Spiral-wound continuous nylon wrap keeping the tyre contour perfectly round at autobahn and highway speeds for an ultra-quiet, vibration-free ride.',
     specs: 'Acoustic Noise Damping · Uniform Contact Patch',
+    image: '/images/brand-summit.jpg',
+    tag: 'Silent Highway Contour Wrap',
   },
   {
     id: 'bead',
@@ -165,6 +164,8 @@ const tyreAnatomy = [
     description:
       'Engineered steel wire bead with firm rubber apex filler, locking the tyre bead securely to the alloy rim even under aggressive lateral track loads.',
     specs: 'Air-Tight Bead Seat · Zero Wheel Slippage',
+    image: '/images/brand-nocturne.jpg',
+    tag: 'Forged Rim & Bead Lock Interface',
   },
 ]
 
@@ -181,12 +182,32 @@ export default function AboutExperience() {
   const [selectedLayer, setSelectedLayer] = useState(tyreAnatomy[0])
   const [activeCity, setActiveCity] = useState(metroHubs[0])
 
+  const stageCardRef = useRef<HTMLDivElement>(null)
+  const [stageTilt, setStageTilt] = useState({ x: 0, y: 0 })
+
+  const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!stageCardRef.current) return
+    const rect = stageCardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    const rotX = -((y - centerY) / centerY) * 7
+    const rotY = ((x - centerX) / centerX) * 7
+    setStageTilt({ x: rotX, y: rotY })
+  }
+
+  const handleStageMouseLeave = () => {
+    setStageTilt({ x: 0, y: 0 })
+  }
+
   return (
     <div className="relative">
       {/* Background Ambience */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(244,208,0,0.06),transparent_50%)]" />
 
-      {/* HERO SECTION WITH 3D ANATOMY INSPECTOR */}
+      {/* HERO SECTION WITH REAL ANATOMY PHOTOGRAPHY LAB */}
       <section className="relative mx-auto max-w-[1500px] px-5 pt-32 pb-16 lg:px-8">
         <div className="flex flex-col gap-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-race/30 bg-race/10 px-4 py-1 text-xs font-bold tracking-[.2em] text-race uppercase">
@@ -198,25 +219,31 @@ export default function AboutExperience() {
           </h1>
           <p className="max-w-3xl text-base text-white/60 lg:text-xl leading-relaxed">
             TYRES666 was founded to transform tyre buying into a transparent, high-precision digital
-            experience for Australian drivers. Combining cutting-edge 3D tread inspection, verified OEM fitment,
-            and an Australia-wide network of certified fitting hubs.
+            experience for Australian drivers. Combining verified engineering compound photography,
+            guaranteed OEM fitment, and an Australia-wide network of certified fitting hubs.
           </p>
         </div>
 
-        {/* 3D TYRE ANATOMY STAGE */}
+        {/* REAL TYRE ANATOMY PHOTOGRAPHY STAGE */}
         <div className="mt-14 overflow-hidden rounded-3xl border border-white/10 bg-[#090b0e] shadow-[0_30px_90px_rgba(0,0,0,0.85)]">
           <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
-            {/* 3D Canvas Viewport */}
-            <div className="relative min-h-[480px] border-b border-white/10 bg-gradient-to-b from-[#11141a] to-[#090a0d] lg:min-h-[600px] lg:border-b-0 lg:border-r">
+            {/* Left Real Photography Viewport */}
+            <div
+              ref={stageCardRef}
+              onMouseMove={handleStageMouseMove}
+              onMouseLeave={handleStageMouseLeave}
+              style={{ perspective: '1200px' }}
+              className="relative min-h-[480px] border-b border-white/10 bg-[#08090c] lg:min-h-[600px] lg:border-b-0 lg:border-r overflow-hidden select-none"
+            >
               {/* Badges */}
-              <div className="absolute left-6 top-6 z-10 flex flex-wrap items-center gap-2">
-                <span className="rounded-full border border-white/15 bg-black/60 px-3.5 py-1.5 text-[11px] font-bold tracking-wider text-white uppercase backdrop-blur">
-                  3D Anatomy Lab
+              <div className="absolute left-6 top-6 z-20 flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-white/15 bg-black/70 px-3.5 py-1.5 text-[11px] font-bold tracking-wider text-white uppercase backdrop-blur">
+                  Tyre Engineering Lab
                 </span>
                 <span
                   className="rounded-full px-3.5 py-1.5 text-[11px] font-bold tracking-wider uppercase backdrop-blur"
                   style={{
-                    backgroundColor: `${selectedLayer.accent}20`,
+                    backgroundColor: `${selectedLayer.accent}25`,
                     color: selectedLayer.accent,
                     border: `1px solid ${selectedLayer.accent}50`,
                   }}
@@ -225,29 +252,44 @@ export default function AboutExperience() {
                 </span>
               </div>
 
-              <div className="absolute right-6 top-6 z-10 rounded-full border border-white/10 bg-black/60 px-3.5 py-1.5 text-xs font-mono text-white/60 backdrop-blur">
-                360° Drag & Inspect
+              <div className="absolute right-6 top-6 z-20 rounded-full border border-white/15 bg-black/70 px-3.5 py-1.5 text-xs font-mono text-white/70 backdrop-blur">
+                {selectedLayer.tag}
               </div>
 
-              {/* Real-time 3D Scene */}
-              <div className="h-[480px] w-full lg:h-[600px]">
-                <TyreScene
+              {/* REAL PHOTOGRAPHY SHOWCASE WITH 3D DEPTH */}
+              <div
+                style={{
+                  transform: `rotateX(${stageTilt.x}deg) rotateY(${stageTilt.y}deg)`,
+                  transition: 'transform 0.15s ease-out',
+                }}
+                className="relative h-[480px] w-full lg:h-[600px]"
+              >
+                <Image
                   key={selectedLayer.id}
-                  accentColor={selectedLayer.accent}
-                  rimColor="#1a1c22"
-                  interactiveControls={true}
-                  autoRotate={true}
-                  rotationSpeed={0.3}
-                  scale={1.35}
+                  src={selectedLayer.image}
+                  alt={selectedLayer.name}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-center"
+                />
+
+                {/* Dark Vignettes & Layer Accent Ambient Glow */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090b0e] via-transparent to-black/40" />
+                <div
+                  className="pointer-events-none absolute inset-0 transition-all duration-700"
+                  style={{
+                    background: `radial-gradient(circle at 50% 50%, transparent 45%, ${selectedLayer.accent}25 100%)`,
+                  }}
                 />
               </div>
 
               {/* Controls Footer */}
-              <div className="absolute bottom-6 inset-x-6 z-10 flex items-center justify-between text-xs text-white/40">
-                <span className="flex items-center gap-2">
-                  <RotateCcw size={13} className="text-race" /> Drag cursor to inspect alloy spokes & tread
+              <div className="absolute bottom-6 inset-x-6 z-20 flex items-center justify-between text-xs text-white/60">
+                <span className="bg-black/60 px-3 py-1 rounded-md backdrop-blur">
+                  Precision Tyre Engineering Specimen
                 </span>
-                <span className="font-mono text-xs font-bold" style={{ color: selectedLayer.accent }}>
+                <span className="font-mono text-xs font-bold bg-black/60 px-3 py-1 rounded-md backdrop-blur" style={{ color: selectedLayer.accent }}>
                   {selectedLayer.specs}
                 </span>
               </div>
@@ -323,7 +365,7 @@ export default function AboutExperience() {
                   href="/brands"
                   className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 text-xs font-bold tracking-wider text-white uppercase backdrop-blur transition hover:border-white hover:bg-white hover:text-black"
                 >
-                  View 3D Brands
+                  View Brands
                 </Link>
               </div>
             </div>
@@ -370,7 +412,7 @@ export default function AboutExperience() {
             The TYRES666 Pillars
           </h2>
           <p className="max-w-2xl text-sm text-white/60">
-            Eliminating guesswork with transparent data, real 3D visualization, and unmatched logistics speed.
+            Eliminating guesswork with transparent data, real photography visualization, and unmatched logistics speed.
           </p>
         </div>
 

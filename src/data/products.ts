@@ -17,10 +17,9 @@ export const demoProducts: TyreProduct[] = [
     price: 329,
     compareAtPrice: 399,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1698697475256-74b2c40d5f95?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-apex.jpg',
     description:
-      'A development-demo ultra-high-performance tyre specification for interface testing. Product claims must be replaced with verified Shopify catalogue content.',
+      'Ultra-high-performance motorsport racing tyre engineered for lateral G-stability, track agility, and instant steering response.',
     variantId: 'demo-variant-1',
   },
   {
@@ -38,10 +37,9 @@ export const demoProducts: TyreProduct[] = [
     price: 289,
     compareAtPrice: 349,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1789330940319-edc4a8b44522?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-outland.jpg',
     description:
-      'Development-demo all-terrain product content. Confirm all specifications and suitability before publishing.',
+      'All-terrain expedition tyre designed for Australian red dust, rocky climbs, and highway touring with heavy load capacity.',
     variantId: 'demo-variant-2',
   },
   {
@@ -59,10 +57,9 @@ export const demoProducts: TyreProduct[] = [
     price: 249,
     compareAtPrice: 299,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1738089875536-6edcec7c7ccf?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-velocity.jpg',
     description:
-      'Development-demo passenger tyre for layout validation. Live products will be supplied by Shopify.',
+      'High-speed sport touring passenger tyre delivering silent highway cruising, rapid wet braking, and responsive steering feel.',
     variantId: 'demo-variant-3',
   },
   {
@@ -80,10 +77,9 @@ export const demoProducts: TyreProduct[] = [
     price: 269,
     compareAtPrice: 319,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1784609525305-0317a6dcb64c?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-summit.jpg',
     description:
-      'Development-demo highway tyre. No performance, delivery or warranty claims are implied.',
+      'Luxury SUV and crossover touring tyre engineered for stable tracking, quiet family comfort, and long-lasting tread wear.',
     variantId: 'demo-variant-4',
   },
   {
@@ -101,10 +97,9 @@ export const demoProducts: TyreProduct[] = [
     price: 389,
     compareAtPrice: 469,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1760713164476-7eb5063b3d07?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-grit.jpg',
     description:
-      'Development-demo mud-terrain listing. Fitment and specifications require catalogue verification.',
+      'Brutal mud-terrain tyre featuring Kevlar-reinforced 3-ply sidewalls and stone ejectors to conquer extreme off-road bogs.',
     variantId: 'demo-variant-5',
   },
   {
@@ -122,9 +117,9 @@ export const demoProducts: TyreProduct[] = [
     price: 179,
     compareAtPrice: 209,
     available: false,
-    image:
-      'https://images.unsplash.com/photo-1784871063464-2ab36feff8c9?auto=format&fit=crop&w=1200&q=85',
-    description: 'Development-demo commuter tyre listing. Availability is not live inventory.',
+    image: '/images/brand-metro.jpg',
+    description:
+      'Eco-efficient city commuter tyre with low rolling resistance nano-compound for maximum fuel savings and wet grip.',
     variantId: 'demo-variant-6',
   },
   {
@@ -141,10 +136,9 @@ export const demoProducts: TyreProduct[] = [
     speedRating: 'R',
     price: 309,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1558992658-08a063bb01af?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-haul.jpg',
     description:
-      'Development-demo light truck listing. Confirm load requirements with a qualified specialist.',
+      'Commercial light truck radial built with steel-belted reinforcements for trades, couriers, and heavy equipment transport.',
     variantId: 'demo-variant-7',
   },
   {
@@ -162,10 +156,9 @@ export const demoProducts: TyreProduct[] = [
     price: 359,
     compareAtPrice: 429,
     available: true,
-    image:
-      'https://images.unsplash.com/photo-1782467330323-717d744e7ff1?auto=format&fit=crop&w=1200&q=85',
+    image: '/images/brand-nocturne.jpg',
     description:
-      'Development-demo run-flat listing. Vehicle compatibility must be verified against live fitment data.',
+      'Luxury performance run-flat tyre with self-supporting heat-resistant sidewalls allowing 80 km travel after air loss.',
     variantId: 'demo-variant-8',
   },
 ]

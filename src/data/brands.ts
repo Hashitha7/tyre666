@@ -13,6 +13,7 @@ export interface BrandInfo {
   speedRange: string
   popularSizes: string[]
   keyFeatures: string[]
+  image: string
 }
 
 export const brandDetails: Record<string, BrandInfo> = {
@@ -32,6 +33,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'Y (300 km/h)',
     popularSizes: ['265/35 R19', '245/40 R19', '275/30 R20'],
     keyFeatures: ['Motorsport Silica Compound', 'Reinforced Outer Shoulder', 'Aqua-Groove Hydro Resistance'],
+    image: '/images/brand-apex.jpg',
   },
   Grit: {
     id: 'brand-grit',
@@ -49,6 +51,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'Q (160 km/h)',
     popularSizes: ['285/70 R17', '265/75 R16', '305/70 R17'],
     keyFeatures: ['3-Ply Armor Sidewalls', 'Deep Stone Ejectors', 'Scalloped Shoulder Lugs'],
+    image: '/images/brand-grit.jpg',
   },
   Haul: {
     id: 'brand-haul',
@@ -66,6 +69,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'R (170 km/h)',
     popularSizes: ['245/70 R16', '225/75 R16C', '205/70 R15C'],
     keyFeatures: ['Steel-Belted Reinforcement', 'Heavy Load Rating (118)', 'Even Wear Tread Ribs'],
+    image: '/images/brand-haul.jpg',
   },
   Metro: {
     id: 'brand-metro',
@@ -83,6 +87,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'V (240 km/h)',
     popularSizes: ['205/55 R16', '195/65 R15', '215/60 R16'],
     keyFeatures: ['Fuel-Saving Nano Silica', 'Acoustic Tread Resonance Damping', 'Rapid Water Evacuation'],
+    image: '/images/brand-metro.jpg',
   },
   Nocturne: {
     id: 'brand-nocturne',
@@ -100,6 +105,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'Y (300 km/h)',
     popularSizes: ['245/40 R19', '255/35 R19', '225/45 R18'],
     keyFeatures: ['Extended Mobility Sidewall', 'Heat-Resistant Rubber Core', 'Reinforced Bead Structure'],
+    image: '/images/brand-nocturne.jpg',
   },
   Outland: {
     id: 'brand-outland',
@@ -117,6 +123,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'T (190 km/h)',
     popularSizes: ['265/65 R17', '265/60 R18', '285/65 R18'],
     keyFeatures: ['Aggressive Sidewall Biting Edges', 'Chip & Cut Resistant Rubber', 'M+S & 3PMSF Certified'],
+    image: '/images/brand-outland.jpg',
   },
   Summit: {
     id: 'brand-summit',
@@ -134,6 +141,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'V (240 km/h)',
     popularSizes: ['235/60 R18', '225/65 R17', '235/55 R19'],
     keyFeatures: ['Multi-Pitch Tread Siping', 'High-Density Silica Compound', 'Continuous Center Rib'],
+    image: '/images/brand-summit.jpg',
   },
   Velocity: {
     id: 'brand-velocity',
@@ -151,6 +159,7 @@ export const brandDetails: Record<string, BrandInfo> = {
     speedRange: 'W (270 km/h)',
     popularSizes: ['225/45 R18', '235/40 R18', '245/40 R18'],
     keyFeatures: ['Asymmetric Grip Zones', 'High-Stiffness Shoulder Blocks', 'Wet Grip Rating: A'],
+    image: '/images/brand-velocity.jpg',
   },
 }
 
@@ -171,6 +180,7 @@ export function getBrandData(brandName: string): BrandInfo {
       speedRange: 'V (240 km/h)',
       popularSizes: ['Universal Fitment'],
       keyFeatures: ['Durable Compound', 'All-Weather Traction'],
+      image: '/images/hero-tyre.jpg',
     }
   )
 }

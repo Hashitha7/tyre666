@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo, useState, useRef } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -12,32 +11,24 @@ import {
   Gauge,
   Layers,
   Sparkles,
-  RotateCcw,
   CheckCircle2,
   ShoppingCart,
   SlidersHorizontal,
   ExternalLink,
+  Award,
+  Check,
 } from 'lucide-react'
 import type { TyreProduct } from '@/types/product'
-import { brandDetails, getBrandData, type BrandInfo } from '@/data/brands'
+import { getBrandData, type BrandInfo } from '@/data/brands'
 import { money } from '@/data/products'
 import { useStorefront } from '@/store/storefront'
-
-const TyreScene = dynamic(() => import('@/components/3d/TyreScene'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="size-64 animate-pulse rounded-full border-[36px] border-white/5 border-t-race/50" />
-    </div>
-  ),
-})
 
 interface BrandsDirectoryProps {
   products: TyreProduct[]
   isLiveShopify?: boolean
 }
 
-// 3D Card with interactive tilt physics
+// 3D Card with interactive tilt physics & real brand photo
 function BrandTiltCard({
   brand,
   brandInfo,
@@ -68,16 +59,15 @@ function BrandTiltCard({
     const centerX = rect.width / 2
     const centerY = rect.height / 2
 
-    // Max 14 deg tilt
-    const rotX = -((y - centerY) / centerY) * 12
-    const rotY = ((x - centerX) / centerX) * 12
+    const rotX = -((y - centerY) / centerY) * 10
+    const rotY = ((x - centerX) / centerX) * 10
 
     setRotateX(rotX)
     setRotateY(rotY)
     setGlarePos({
       x: (x / rect.width) * 100,
       y: (y / rect.height) * 100,
-      opacity: 0.18,
+      opacity: 0.16,
     })
   }
 
@@ -93,20 +83,18 @@ function BrandTiltCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onSelect}
-      style={{
-        perspective: '1000px',
-      }}
+      style={{ perspective: '1000px' }}
       className="group relative cursor-pointer select-none"
     >
       <div
         style={{
-          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) ${isActive ? 'translateZ(18px)' : 'translateZ(0px)'}`,
+          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) ${isActive ? 'translateZ(14px)' : 'translateZ(0px)'}`,
           transition: 'transform 0.18s ease-out, border-color 0.3s ease, box-shadow 0.3s ease',
           boxShadow: isActive
-            ? `0 20px 40px -15px ${brandInfo.accentColor}33, 0 0 25px ${brandInfo.accentColor}22`
+            ? `0 20px 40px -15px ${brandInfo.accentColor}44, 0 0 25px ${brandInfo.accentColor}22`
             : undefined,
         }}
-        className={`relative flex min-h-[290px] flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-all duration-300 ${
+        className={`relative flex flex-col justify-between overflow-hidden rounded-2xl border transition-all duration-300 ${
           isActive
             ? 'border-race bg-[#13161c]'
             : 'border-white/10 bg-[#0d0f13] hover:border-white/30 hover:bg-[#12141a]'
@@ -114,7 +102,7 @@ function BrandTiltCard({
       >
         {/* Dynamic 3D Glare sheen */}
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-10"
           style={{
             background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, ${brandInfo.accentColor}, transparent 60%)`,
             opacity: glarePos.opacity,
@@ -123,85 +111,96 @@ function BrandTiltCard({
 
         {/* Ambient Top Glow Line */}
         <div
-          className="absolute inset-x-0 top-0 h-1 transition-all duration-300"
+          className="absolute inset-x-0 top-0 h-1 transition-all duration-300 z-10"
           style={{
             backgroundColor: isActive ? brandInfo.accentColor : 'transparent',
             boxShadow: isActive ? `0 0 16px ${brandInfo.accentColor}` : 'none',
           }}
         />
 
-        {/* Top Header */}
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-xs font-bold tracking-widest text-white/40">
-            0{index + 1}
-          </span>
-          <div className="flex items-center gap-2">
-            <span
-              className="rounded-full px-2.5 py-0.5 text-[9px] font-bold tracking-wider uppercase"
-              style={{
-                backgroundColor: `${brandInfo.accentColor}1a`,
-                color: brandInfo.accentColor,
-                border: `1px solid ${brandInfo.accentColor}40`,
-              }}
-            >
-              {brandInfo.category}
+        {/* Real Brand Tyre Image Preview */}
+        <div className="relative aspect-[1.3] w-full overflow-hidden bg-white/5">
+          <Image
+            src={brandInfo.image}
+            alt={`${brand} tyre`}
+            fill
+            sizes="(max-width: 768px) 100vw, 25vw"
+            className="object-cover object-center transition duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f13] via-transparent to-black/30" />
+
+          {/* Top Badges */}
+          <div className="absolute inset-x-4 top-4 flex items-center justify-between z-10">
+            <span className="font-mono text-xs font-bold tracking-widest text-white/80 bg-black/60 px-2 py-0.5 rounded-md backdrop-blur">
+              0{index + 1}
             </span>
-            {isActive && (
-              <span className="flex size-2 rounded-full bg-race shadow-[0_0_8px_#f4d000]" />
-            )}
-          </div>
-        </div>
-
-        {/* Center Brand Identity */}
-        <div className="my-auto py-4">
-          <h3 className="display text-4xl font-black uppercase tracking-tight text-white transition-colors group-hover:text-race lg:text-5xl">
-            {brand}
-          </h3>
-          <p className="mt-1.5 text-xs text-white/60 line-clamp-1">{brandInfo.tagline}</p>
-          <div className="mt-3 flex items-center gap-2 text-[11px] text-white/40">
-            <Compass size={13} className="text-race" />
-            <span>{brandInfo.origin}</span>
-            <span className="text-white/20">•</span>
-            <span>{brandInfo.terrain}</span>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-white/5 pt-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="block text-[10px] tracking-wider text-white/40 uppercase">
-                Inventory
-              </span>
-              <strong className="text-xs font-semibold text-white">
-                {productCount} model(s) {startingPrice ? `• From ${money(startingPrice)}` : ''}
-              </strong>
-            </div>
-
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onSelect()
+              <span
+                className="rounded-full px-2.5 py-0.5 text-[9px] font-bold tracking-wider uppercase backdrop-blur"
+                style={{
+                  backgroundColor: `${brandInfo.accentColor}30`,
+                  color: brandInfo.accentColor,
+                  border: `1px solid ${brandInfo.accentColor}50`,
                 }}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase transition ${
-                  isActive
-                    ? 'bg-race text-black font-extrabold'
-                    : 'bg-white/10 text-white hover:bg-white/20'
-                }`}
               >
-                <span>3D View</span>
-              </button>
+                {brandInfo.category}
+              </span>
+            </div>
+          </div>
+        </div>
 
-              <Link
-                href={`/shop?brand=${brand}`}
-                onClick={(e) => e.stopPropagation()}
-                className="grid size-8 place-items-center rounded-full border border-white/10 text-white/60 transition hover:border-race hover:bg-race hover:text-black"
-                title={`Shop ${brand} tyres`}
-              >
-                <ArrowRight size={14} />
-              </Link>
+        {/* Brand Information */}
+        <div className="p-5">
+          <div>
+            <h3 className="display text-3xl font-black uppercase tracking-tight text-white transition-colors group-hover:text-race lg:text-4xl">
+              {brand}
+            </h3>
+            <p className="mt-1 text-xs text-white/60 line-clamp-1">{brandInfo.tagline}</p>
+            <div className="mt-2.5 flex items-center gap-2 text-[11px] text-white/40">
+              <Compass size={12} className="text-race" />
+              <span>{brandInfo.origin}</span>
+              <span className="text-white/20">•</span>
+              <span>{brandInfo.terrain}</span>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="mt-5 border-t border-white/5 pt-3.5">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="block text-[9px] tracking-wider text-white/40 uppercase">
+                  Catalogue
+                </span>
+                <strong className="text-xs font-semibold text-white">
+                  {productCount} model(s) {startingPrice ? `• From ${money(startingPrice)}` : ''}
+                </strong>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onSelect()
+                  }}
+                  className={`flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-bold uppercase transition ${
+                    isActive
+                      ? 'bg-race text-black font-extrabold'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                >
+                  <span>Select</span>
+                </button>
+
+                <Link
+                  href={`/shop?brand=${brand}`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="grid size-7 place-items-center rounded-full border border-white/10 text-white/60 transition hover:border-race hover:bg-race hover:text-black"
+                  title={`Shop ${brand} tyres`}
+                >
+                  <ArrowRight size={13} />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -218,6 +217,9 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
   const [activeBrand, setActiveBrand] = useState<string>(allBrands[0] || 'Apex')
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('All')
+
+  const stageCardRef = useRef<HTMLDivElement>(null)
+  const [stageTilt, setStageTilt] = useState({ x: 0, y: 0 })
 
   const addToCart = useStorefront((state) => state.addToCart)
 
@@ -248,6 +250,23 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
 
   const categories = ['All', 'Performance', 'SUV & 4WD', 'Passenger', 'Light Truck', 'Run-Flat']
 
+  const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!stageCardRef.current) return
+    const rect = stageCardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    const rotX = -((y - centerY) / centerY) * 6
+    const rotY = ((x - centerX) / centerX) * 6
+    setStageTilt({ x: rotX, y: rotY })
+  }
+
+  const handleStageMouseLeave = () => {
+    setStageTilt({ x: 0, y: 0 })
+  }
+
   return (
     <div className="relative">
       {/* Background Ambience */}
@@ -268,7 +287,7 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
             </h1>
             <p className="mt-4 max-w-2xl text-base text-white/60 lg:text-lg">
               Explore world-class tyre manufacturers engineered for Australian terrain. Select a brand to
-              inspect its bespoke 3D engineered tyre, explore verified specifications, and find your exact vehicle fitment.
+              inspect its bespoke commercial photography, verified specifications, and find your exact vehicle fitment.
             </p>
           </div>
 
@@ -288,18 +307,24 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
           </div>
         </div>
 
-        {/* 3D Brand Interactive Stage */}
+        {/* REAL BRAND SHOWCASE STAGE (100% Real Image Photography) */}
         <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 bg-[#090b0e] shadow-[0_30px_90px_rgba(0,0,0,0.8)]">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
-            {/* 3D Canvas Stage */}
-            <div className="relative min-h-[460px] border-b border-white/10 bg-gradient-to-b from-[#11141a] to-[#090a0d] lg:min-h-[580px] lg:border-b-0 lg:border-r">
-              {/* Dynamic 3D Top Badges */}
-              <div className="absolute left-6 top-6 z-10 flex items-center gap-2">
-                <span className="rounded-full border border-white/15 bg-black/50 px-3.5 py-1.5 text-[10px] font-bold tracking-widest text-white/80 uppercase backdrop-blur">
-                  Interactive 3D Stage
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
+            {/* Left Real Photography Showcase */}
+            <div
+              ref={stageCardRef}
+              onMouseMove={handleStageMouseMove}
+              onMouseLeave={handleStageMouseLeave}
+              style={{ perspective: '1200px' }}
+              className="relative min-h-[460px] border-b border-white/10 bg-[#08090c] lg:min-h-[600px] lg:border-b-0 lg:border-r overflow-hidden select-none"
+            >
+              {/* Dynamic Top Badges */}
+              <div className="absolute left-6 top-6 z-20 flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-white/15 bg-black/70 px-3.5 py-1.5 text-[10px] font-bold tracking-widest text-white/90 uppercase backdrop-blur">
+                  Official Brand Gallery
                 </span>
                 <span
-                  className="rounded-full px-3 py-1 text-[10px] font-bold tracking-wider uppercase backdrop-blur"
+                  className="rounded-full px-3.5 py-1.5 text-[10px] font-bold tracking-wider uppercase backdrop-blur"
                   style={{
                     backgroundColor: `${activeBrandData.accentColor}25`,
                     color: activeBrandData.accentColor,
@@ -310,31 +335,61 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
                 </span>
               </div>
 
-              <div className="absolute right-6 top-6 z-10 rounded-full border border-white/10 bg-black/50 px-3.5 py-1.5 text-[10px] font-mono text-white/50 backdrop-blur">
-                360° Drag & Inspect
+              {/* Verified Badge */}
+              <div className="absolute right-6 top-6 z-20 flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[10px] font-bold text-white/80 uppercase backdrop-blur">
+                <Award size={13} className="text-race" />
+                <span>Verified Australian Fitment</span>
               </div>
 
-              {/* 3D Scene */}
-              <div className="h-[460px] w-full lg:h-[580px]">
-                <TyreScene
+              {/* REAL BRAND TYRE IMAGE WITH 3D DEPTH PARALLAX */}
+              <div
+                style={{
+                  transform: `rotateX(${stageTilt.x}deg) rotateY(${stageTilt.y}deg)`,
+                  transition: 'transform 0.15s ease-out',
+                }}
+                className="relative h-[460px] w-full lg:h-[600px]"
+              >
+                <Image
                   key={activeBrandData.name}
-                  accentColor={activeBrandData.accentColor}
-                  rimColor={activeBrandData.rimColor}
-                  interactiveControls={true}
-                  autoRotate={true}
-                  rotationSpeed={0.32}
-                  scale={1.35}
+                  src={activeBrandData.image}
+                  alt={`${activeBrandData.name} genuine tyre & wheel`}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-center"
+                />
+
+                {/* Dark Vignettes & Brand Accent Ambient Glow */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090b0e] via-transparent to-black/40" />
+                <div
+                  className="pointer-events-none absolute inset-0 transition-all duration-700"
+                  style={{
+                    background: `radial-gradient(circle at 50% 50%, transparent 45%, ${activeBrandData.accentColor}20 100%)`,
+                  }}
                 />
               </div>
 
-              {/* Bottom 3D Scene Controls / Hint */}
-              <div className="absolute bottom-6 inset-x-6 z-10 flex items-center justify-between text-[11px] text-white/40">
-                <span className="flex items-center gap-2">
-                  <RotateCcw size={13} className="text-race" /> Left-click & drag to spin 3D tyre
-                </span>
-                <span className="font-mono text-xs font-bold" style={{ color: activeBrandData.accentColor }}>
-                  {activeBrandData.popularSizes[0]} Specification
-                </span>
+              {/* Bottom Quick Brand Selector Bar */}
+              <div className="absolute bottom-5 inset-x-6 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/70 p-3 backdrop-blur">
+                <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1">
+                  {allBrands.map((b) => (
+                    <button
+                      key={b}
+                      onClick={() => setActiveBrand(b)}
+                      className={`rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase transition ${
+                        activeBrand.toLowerCase() === b.toLowerCase()
+                          ? 'bg-race text-black font-extrabold'
+                          : 'text-white/60 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      {b}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] font-bold" style={{ color: activeBrandData.accentColor }}>
+                  <span>{activeBrandData.popularSizes[0]}</span>
+                </div>
               </div>
             </div>
 
@@ -480,7 +535,6 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
                       alt={`${product.brand} ${product.name}`}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      unoptimized={product.image.startsWith('http')}
                       className="object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#12151b] via-transparent to-transparent" />
@@ -602,7 +656,6 @@ export default function BrandsDirectory({ products, isLiveShopify }: BrandsDirec
                 startingPrice={minPrice}
                 onSelect={() => {
                   setActiveBrand(brand)
-                  // Smoothly scroll towards the 3D Stage if needed
                   window.scrollTo({ top: 350, behavior: 'smooth' })
                 }}
               />
