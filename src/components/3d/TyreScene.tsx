@@ -39,25 +39,25 @@ function Tyre({
           <meshStandardMaterial color="#101114" roughness={0.42} metalness={0.15} />
         </mesh>
 
-        {/* Aggressive 3D Tread Lugs */}
-        {Array.from({ length: 32 }).map((_, index) => {
-          const angle = (index / 32) * Math.PI * 2
+        {/* Directional performance tread */}
+        {Array.from({ length: 28 }).map((_, index) => {
+          const angle = (index / 28) * Math.PI * 2
           return (
             <mesh
               key={index}
-              position={[Math.cos(angle) * 1.56, Math.sin(angle) * 1.56, 0]}
-              rotation={[0, 0, angle]}
+              position={[Math.cos(angle) * 1.57, Math.sin(angle) * 1.57, 0]}
+              rotation={[0.12, 0.18, angle + Math.PI / 4]}
               castShadow
             >
-              <boxGeometry args={[0.18, 0.44, 0.72]} />
-              <meshStandardMaterial color="#08090a" roughness={0.7} />
+              <boxGeometry args={[0.2, 0.34, 0.82]} />
+              <meshStandardMaterial color="#050607" roughness={0.76} />
             </mesh>
           )
         })}
 
-        {/* Outer Accent Rim Stripe */}
+        {/* Sidewall accent rings */}
         <mesh>
-          <torusGeometry args={[0.72, 0.065, 18, 64]} />
+          <torusGeometry args={[0.92, 0.035, 18, 64]} />
           <meshStandardMaterial
             color={accentColor}
             emissive={accentColor}
@@ -66,31 +66,35 @@ function Tyre({
             roughness={0.2}
           />
         </mesh>
-
-        {/* Central Alloy Wheel Disc */}
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.65, 0.65, 0.16, 48]} />
-          <meshStandardMaterial color={rimColor} metalness={0.92} roughness={0.18} />
+        <mesh>
+          <torusGeometry args={[1.03, 0.018, 14, 64]} />
+          <meshStandardMaterial color="#8f7c00" metalness={0.8} roughness={0.3} />
         </mesh>
 
-        {/* Dynamic Sport Spokes */}
-        {Array.from({ length: 5 }).map((_, index) => {
-          const angle = (index / 5) * Math.PI * 2
+        {/* Brushed alloy wheel */}
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.72, 0.72, 0.14, 64]} />
+          <meshStandardMaterial color="#343942" metalness={0.96} roughness={0.2} />
+        </mesh>
+
+        {/* Split-Y alloy spokes */}
+        {Array.from({ length: 10 }).map((_, index) => {
+          const angle = (index / 10) * Math.PI * 2
           return (
             <mesh
               key={`spoke-${index}`}
-              position={[Math.cos(angle) * 0.35, Math.sin(angle) * 0.35, 0.04]}
-              rotation={[0, 0, angle + Math.PI / 2]}
+              position={[Math.cos(angle) * 0.34, Math.sin(angle) * 0.34, 0.1]}
+              rotation={[Math.PI / 2, 0, angle]}
             >
-              <boxGeometry args={[0.08, 0.45, 0.1]} />
-              <meshStandardMaterial color={accentColor} metalness={0.85} roughness={0.25} />
+              <boxGeometry args={[0.09, 0.5, 0.1]} />
+              <meshStandardMaterial color={rimColor} metalness={0.9} roughness={0.22} />
             </mesh>
           )
         })}
 
-        {/* Center Cap with Brand Accent */}
+        {/* Yellow centre cap */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.16, 0.16, 0.24, 24]} />
+          <cylinderGeometry args={[0.18, 0.18, 0.26, 32]} />
           <meshStandardMaterial color={accentColor} metalness={0.7} roughness={0.2} />
         </mesh>
       </group>
