@@ -9,6 +9,7 @@ import { Folders } from './collections/Folders'
 import { Tags } from './collections/Tags'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { FitmentRequests } from './collections/FitmentRequests'
+import { NewsletterSubscriptions } from './collections/NewsletterSubscriptions'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -32,7 +33,15 @@ export default buildFigmaConfig({
     fallbackLanguage: 'en',
     supportedLanguages: { en: adminLanguage },
   },
-  collections: [Admins, Media, Folders, Tags, ContactSubmissions, FitmentRequests],
+  collections: [
+    Admins,
+    Media,
+    Folders,
+    Tags,
+    ContactSubmissions,
+    FitmentRequests,
+    NewsletterSubscriptions,
+  ],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

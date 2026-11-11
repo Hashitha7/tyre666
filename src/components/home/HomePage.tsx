@@ -13,6 +13,7 @@ import Hero from './Hero'
 import TyreFinder from '@/components/tyre-finder/TyreFinder'
 import ProductCard from '@/components/products/ProductCard'
 import type { TyreProduct } from '@/types/product'
+import NewsletterSignup from '@/components/content/NewsletterSignup'
 
 const categories = [
   'Passenger',
@@ -228,19 +229,10 @@ export default function HomePage({
           </span>
           <h2 className="display mt-3 text-5xl font-black uppercase">Join the inside line.</h2>
           <p className="mt-4 text-sm text-white/45">
-            Newsletter delivery will activate when an email provider is connected.
+            Subscribers are saved securely for the store team. Email campaign delivery can be
+            connected to an approved provider later.
           </p>
-          <form className="mt-7 flex gap-2" action="#">
-            <input
-              required
-              type="email"
-              placeholder="Email address"
-              className="h-14 min-w-0 flex-1 rounded-full border border-white/10 bg-black/30 px-5 text-sm"
-            />
-            <button className="rounded-full bg-race px-6 text-xs font-black text-black">
-              SUBSCRIBE
-            </button>
-          </form>
+          <NewsletterSignup />
         </div>
       </section>
     </main>
