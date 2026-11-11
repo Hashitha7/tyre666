@@ -32,7 +32,7 @@ function Tyre({
 
   return (
     <Float speed={1.4} rotationIntensity={0.15} floatIntensity={0.35}>
-      <group ref={ref} rotation={[0.18, -0.55, 0.04]} scale={scale}>
+      <group ref={ref} rotation={[0.08, -0.35, 0.02]} scale={scale}>
         {/* Main Rubber Tyre */}
         <mesh castShadow>
           <torusGeometry args={[1.22, 0.48, 44, 128]} />
@@ -68,7 +68,7 @@ function Tyre({
         </mesh>
 
         {/* Central Alloy Wheel Disc */}
-        <mesh>
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.65, 0.65, 0.16, 48]} />
           <meshStandardMaterial color={rimColor} metalness={0.92} roughness={0.18} />
         </mesh>
@@ -110,7 +110,7 @@ export interface TyreSceneProps {
 export default function TyreScene({
   accentColor = '#f4d000',
   rimColor = '#25282e',
-  interactiveControls = false,
+  interactiveControls = true,
   autoRotate = true,
   rotationSpeed = 0.28,
   scale = 1.28,
@@ -118,7 +118,7 @@ export default function TyreScene({
   return (
     <Canvas
       dpr={[1, 1.6]}
-      camera={{ position: [0, 0, 5.2], fov: 38 }}
+      camera={{ position: [0, 0, 5.8], fov: 38 }}
       gl={{ antialias: true, alpha: true }}
     >
       <ambientLight intensity={0.4} />
