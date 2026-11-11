@@ -122,6 +122,7 @@ function DealTiltCard({
             alt={`${product.brand} ${product.name}`}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
+            unoptimized={product.image.startsWith('http')}
             className="object-cover opacity-85 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f14] via-transparent to-transparent" />

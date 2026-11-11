@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const customScripts = makeSiteSettings.customScripts
 
   return (
-    <html lang={language}>
+    <html lang={language} data-scroll-behavior="smooth">
       <head>
         {renderHeadCustomCode(customScripts?.headStart, 'head-start')}
         {renderHeadCustomCode(customScripts?.headEnd, 'head-end')}

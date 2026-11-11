@@ -129,6 +129,7 @@ export default function HomePage({
           alt="Dark performance SUV in a studio setting"
           fill
           sizes="100vw"
+          unoptimized
           className="object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />

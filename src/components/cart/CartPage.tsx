@@ -56,7 +56,14 @@ export default function CartPage() {
               className="grid grid-cols-[90px_1fr] gap-4 rounded-2xl border border-white/10 p-3 sm:grid-cols-[120px_1fr_auto]"
             >
               <div className="relative aspect-square overflow-hidden rounded-xl">
-                <Image src={product.image} alt="" fill sizes="120px" className="object-cover" />
+                <Image
+                  src={product.image}
+                  alt=""
+                  fill
+                  sizes="120px"
+                  unoptimized={product.image.startsWith('http')}
+                  className="object-cover"
+                />
               </div>
               <div className="py-2">
                 <span className="text-[10px] font-bold tracking-wider text-race">
