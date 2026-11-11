@@ -32,7 +32,12 @@ function Tyre({
 
   return (
     <Float speed={1.4} rotationIntensity={0.15} floatIntensity={0.35}>
-      <group ref={ref} rotation={[0.08, -0.35, 0.02]} scale={scale}>
+      <group
+        ref={ref}
+        position={[0.9, -0.62, 0.52]}
+        rotation={[0.08, -0.35, 0.02]}
+        scale={scale}
+      >
         {/* Main Rubber Tyre */}
         <mesh castShadow>
           <torusGeometry args={[1.22, 0.48, 44, 128]} />
@@ -102,6 +107,47 @@ function Tyre({
   )
 }
 
+function VehicleBody() {
+  return (
+    <group position={[-0.2, -0.15, -0.35]} rotation={[0.02, -0.12, 0]}>
+      <mesh castShadow position={[0, -0.1, 0]}>
+        <boxGeometry args={[3.9, 0.78, 1.35]} />
+        <meshStandardMaterial color="#161a21" metalness={0.72} roughness={0.28} />
+      </mesh>
+      <mesh castShadow position={[-0.25, 0.52, 0]}>
+        <boxGeometry args={[2.45, 0.92, 1.2]} />
+        <meshStandardMaterial color="#202631" metalness={0.58} roughness={0.3} />
+      </mesh>
+      <mesh position={[-0.48, 0.55, 0.615]}>
+        <boxGeometry args={[1.05, 0.48, 0.025]} />
+        <meshStandardMaterial color="#080c13" metalness={0.35} roughness={0.16} />
+      </mesh>
+      <mesh position={[0.7, 0.55, 0.615]}>
+        <boxGeometry args={[0.72, 0.48, 0.025]} />
+        <meshStandardMaterial color="#080c13" metalness={0.35} roughness={0.16} />
+      </mesh>
+      <mesh position={[1.84, 0.02, 0.69]}>
+        <boxGeometry args={[0.16, 0.23, 0.03]} />
+        <meshStandardMaterial
+          color="#f4d000"
+          emissive="#f4d000"
+          emissiveIntensity={1.2}
+          metalness={0.4}
+          roughness={0.2}
+        />
+      </mesh>
+      <mesh position={[-1.88, 0.02, 0.69]}>
+        <boxGeometry args={[0.12, 0.2, 0.03]} />
+        <meshStandardMaterial color="#d21d27" emissive="#4d080d" emissiveIntensity={0.5} />
+      </mesh>
+      <mesh position={[0, 0.88, 0]}>
+        <boxGeometry args={[2.8, 0.06, 1.28]} />
+        <meshStandardMaterial color="#05070b" metalness={0.45} roughness={0.2} />
+      </mesh>
+    </group>
+  )
+}
+
 export interface TyreSceneProps {
   accentColor?: string
   rimColor?: string
@@ -137,12 +183,13 @@ export default function TyreScene({
       <pointLight position={[-4, -1, 3]} intensity={38} color="#4b68ff" />
       <pointLight position={[3, -2, -2]} intensity={30} color={accentColor} />
 
+      <VehicleBody />
       <Tyre
         accentColor={accentColor}
         rimColor={rimColor}
         autoRotate={autoRotate}
         rotationSpeed={rotationSpeed}
-        scale={scale}
+        scale={scale * 0.82}
       />
 
       {interactiveControls && (
