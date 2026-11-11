@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo, useState, useEffect, useRef } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -25,15 +24,6 @@ import {
 import type { TyreProduct } from '@/types/product'
 import { money } from '@/data/products'
 import { useStorefront } from '@/store/storefront'
-
-const TyreScene = dynamic(() => import('@/components/3d/TyreScene'), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="size-64 animate-pulse rounded-full border-[36px] border-white/5 border-t-red-500/60" />
-    </div>
-  ),
-})
 
 interface DealsExperienceProps {
   products: TyreProduct[]
@@ -122,7 +112,6 @@ function DealTiltCard({
             alt={`${product.brand} ${product.name}`}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
-            unoptimized={product.image.startsWith('http')}
             className="object-cover opacity-85 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f14] via-transparent to-transparent" />
@@ -234,6 +223,26 @@ export default function DealsExperience({ products }: DealsExperienceProps) {
   // Featured Hero Deal
   const featuredDeal = dealProducts[0] || products[0]
 
+  const stageCardRef = useRef<HTMLDivElement>(null)
+  const [stageTilt, setStageTilt] = useState({ x: 0, y: 0 })
+
+  const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!stageCardRef.current) return
+    const rect = stageCardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    const rotX = -((y - centerY) / centerY) * 7
+    const rotY = ((x - centerX) / centerX) * 7
+    setStageTilt({ x: rotX, y: rotY })
+  }
+
+  const handleStageMouseLeave = () => {
+    setStageTilt({ x: 0, y: 0 })
+  }
+
   // Countdown timer simulation for flash deals (ticks down in real-time)
   const [timeLeft, setTimeLeft] = useState({ hours: 18, minutes: 42, seconds: 15 })
   useEffect(() => {
@@ -261,7 +270,6 @@ export default function DealsExperience({ products }: DealsExperienceProps) {
   const calcUnitPrice = calcTyre.price
   const calcTotalOriginal = (calcTyre.compareAtPrice || calcTyre.price) * calcQty
   const calcSubtotal = calcUnitPrice * calcQty
-  // 4 tyres get extra 5% bundle discount
   const calcBundleDiscount = calcQty >= 4 ? Math.round(calcSubtotal * 0.05) : 0
   const calcFinalTotal = calcSubtotal - calcBundleDiscount
   const calcTotalSavings = calcTotalOriginal - calcFinalTotal
@@ -296,7 +304,7 @@ export default function DealsExperience({ products }: DealsExperienceProps) {
       {/* Dynamic Ambient Background */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(239,68,68,0.08),transparent_50%)]" />
 
-      {/* HERO SECTION WITH 3D FLASH DEAL SHOWCASE */}
+      {/* HERO SECTION WITH REAL FLASH DEAL SHOWCASE */}
       <section className="relative mx-auto max-w-[1500px] px-5 pt-32 pb-16 lg:px-8">
         <div className="flex flex-col gap-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/10 px-4 py-1 text-xs font-bold tracking-[.2em] text-red-400 uppercase">
@@ -312,23 +320,29 @@ export default function DealsExperience({ products }: DealsExperienceProps) {
           </p>
         </div>
 
-        {/* 3D Flash Deal Stage */}
+        {/* Real Photography Flash Deal Stage */}
         <div className="mt-12 overflow-hidden rounded-3xl border border-white/10 bg-[#090b0e] shadow-[0_30px_90px_rgba(0,0,0,0.85)]">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
-            {/* Left 3D Stage */}
-            <div className="relative min-h-[460px] border-b border-white/10 bg-gradient-to-b from-[#141014] to-[#090a0d] lg:min-h-[580px] lg:border-b-0 lg:border-r">
+            {/* Left Real Photography Stage */}
+            <div
+              ref={stageCardRef}
+              onMouseMove={handleStageMouseMove}
+              onMouseLeave={handleStageMouseLeave}
+              style={{ perspective: '1200px' }}
+              className="relative min-h-[460px] border-b border-white/10 bg-[#08090c] lg:min-h-[580px] lg:border-b-0 lg:border-r overflow-hidden select-none"
+            >
               {/* Flash Deal Badges */}
-              <div className="absolute left-6 top-6 z-10 flex flex-wrap items-center gap-2">
+              <div className="absolute left-6 top-6 z-20 flex flex-wrap items-center gap-2">
                 <span className="flex items-center gap-1.5 rounded-full bg-red-600 px-3.5 py-1.5 text-[11px] font-black tracking-wider text-white uppercase shadow-[0_0_15px_rgba(220,38,38,0.7)]">
                   <Flame size={13} fill="currentColor" /> Deal of the Week
                 </span>
-                <span className="rounded-full border border-white/15 bg-black/50 px-3 py-1.5 text-[11px] font-bold text-race uppercase backdrop-blur">
+                <span className="rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[11px] font-bold text-race uppercase backdrop-blur">
                   Save ${((featuredDeal.compareAtPrice || 0) - featuredDeal.price).toFixed(0)} Instant
                 </span>
               </div>
 
               {/* Countdown Timer HUD */}
-              <div className="absolute right-6 top-6 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-4 py-1.5 text-xs font-mono text-white/90 backdrop-blur">
+              <div className="absolute right-6 top-6 z-20 flex items-center gap-2 rounded-full border border-white/10 bg-black/70 px-4 py-1.5 text-xs font-mono text-white/90 backdrop-blur">
                 <Clock size={14} className="text-red-400" />
                 <span>
                   Ends in {String(timeLeft.hours).padStart(2, '0')}:
@@ -337,21 +351,33 @@ export default function DealsExperience({ products }: DealsExperienceProps) {
                 </span>
               </div>
 
-              {/* 3D Canvas */}
-              <div className="h-[460px] w-full lg:h-[580px]">
-                <TyreScene
-                  accentColor="#ef4444"
-                  rimColor="#1b1c22"
-                  interactiveControls={true}
-                  autoRotate={true}
-                  rotationSpeed={0.35}
-                  scale={1.35}
+              {/* REAL PRODUCT IMAGE WITH 3D DEPTH */}
+              <div
+                style={{
+                  transform: `rotateX(${stageTilt.x}deg) rotateY(${stageTilt.y}deg)`,
+                  transition: 'transform 0.15s ease-out',
+                }}
+                className="relative h-[460px] w-full lg:h-[580px]"
+              >
+                <Image
+                  src={featuredDeal.image}
+                  alt={`${featuredDeal.brand} ${featuredDeal.name}`}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-center"
                 />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090b0e] via-transparent to-black/40" />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_45%,rgba(239,68,68,0.18)_100%)]" />
               </div>
 
-              <div className="absolute bottom-6 inset-x-6 z-10 flex items-center justify-between text-xs text-white/40">
-                <span>360° Drag & Rotate 3D Alloy Wheel</span>
-                <span className="font-mono text-race">{featuredDeal.brand} {featuredDeal.name}</span>
+              <div className="absolute bottom-6 inset-x-6 z-20 flex items-center justify-between text-xs text-white/60">
+                <span className="bg-black/60 px-3 py-1 rounded-md backdrop-blur">
+                  Verified Australian Clearance
+                </span>
+                <span className="font-mono text-race bg-black/60 px-3 py-1 rounded-md backdrop-blur font-bold">
+                  {featuredDeal.brand} {featuredDeal.name}
+                </span>
               </div>
             </div>
 
