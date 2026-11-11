@@ -5,21 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
-    "build": "payload build",
+    "build": "next build",
     "start": "next start",
     "format": "oxfmt",
-    "generate:importmap": "payload generate:importmap",
-    "generate:types": "payload generate:types",
-    "payload": "payload"
+    "generate:importmap": "echo Payload backend removed; use Supabase schema",
+    "generate:types": "echo Payload backend removed; use Supabase schema"
   },
   "dependencies": {
-    "@payloadcms/figma": "1.0.0-beta.1",
-    "@payloadcms/next": "4.0.0-beta.6",
-    "@payloadcms/plugin-cloud-storage": "4.0.0-beta.6",
-    "@payloadcms/plugin-mcp": "4.0.0-beta.6",
-    "@payloadcms/richtext-lexical": "4.0.0-beta.6",
-    "@payloadcms/translations": "4.0.0-beta.6",
-    "@payloadcms/ui": "4.0.0-beta.6",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "graphql": "^16.8.1",
@@ -28,12 +20,12 @@
     "monaco-editor": "0.55.1",
     "motion": "^14.12.0",
     "next": "16.4.2",
-    "payload": "4.0.0-beta.6",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "sharp": "^0.35.4",
     "three": "^0.187.0",
-    "zustand": "^5.1.0"
+    "zustand": "^5.1.0",
+    "@supabase/supabase-js": "^2.57.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",

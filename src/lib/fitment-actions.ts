@@ -1,7 +1,6 @@
 'use server'
 
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getSupabaseServerClient } from '@/lib/supabase/server'
 
 type FitmentRequest = {
   make: string
@@ -47,12 +46,15 @@ export async function submitFitmentRequest(input: FitmentRequest): Promise<Fitme
   }
 
   try {
-    const payload = await getPayload({ config: await config })
-    await payload.create({
-      collection: 'fitment-requests' as never,
-      data: { make, model, year: yearNumber, variant: variant || undefined, email, notes: notes || undefined } as never,
-      overrideAccess: false,
+    const { error } = await getSupabaseServerClient().from('fitment_requests').insert({
+      make,
+      model,
+      year: yearNumber,
+      variant: variant || null,
+      email,
+      notes: notes || null,
     })
+    if (error) throw error
     return {
       ok: true,
       message: 'Request received. Our team will verify the fitment before recommending a tyre.',

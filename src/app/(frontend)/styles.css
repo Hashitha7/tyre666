@@ -30,24 +30,6 @@
   }
 }
 
-.figma-custom-code-fragment {
-  display: contents;
-}
-.figma-bypass-link {
-  position: fixed;
-  top: 8px;
-  left: 8px;
-  z-index: 2147483647;
-  transform: translateY(-150%);
-  border-radius: 6px;
-  background: #f4d000;
-  color: #090a0c;
-  padding: 8px 12px;
-  font: 700 14px/1.2 var(--font-sans);
-}
-.figma-bypass-link:focus {
-  transform: translateY(0);
-}
 .display {
   font-family: var(--font-display), sans-serif;
 }

@@ -1,7 +1,6 @@
 'use server'
 
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getSupabaseServerClient } from '@/lib/supabase/server'
 
 type ContactSubmission = {
   name: string
@@ -34,13 +33,13 @@ export async function submitContactSubmission(input: ContactSubmission): Promise
   }
 
   try {
-    const payload = await getPayload({ config: await config })
-    await payload.create({
-      // The generated Payload types refresh in the Figma Make lifecycle after config changes.
-      collection: 'contact-submissions' as never,
-      data: { name, email, phone: phone || undefined, message } as never,
-      overrideAccess: false,
+    const { error } = await getSupabaseServerClient().from('contact_submissions').insert({
+      name,
+      email,
+      phone: phone || null,
+      message,
     })
+    if (error) throw error
     return { ok: true, message: 'Thanks. Your enquiry has been sent.' }
   } catch (error) {
     console.error('Contact submission failed', error)

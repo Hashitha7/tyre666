@@ -1,4 +1,3 @@
-import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -32,10 +31,6 @@ const nextConfig: NextConfig = {
     root: path.resolve(dirname),
   },
   output: 'standalone',
-  images: {
-    loader: 'custom',
-    loaderFile: './figma-image-loader.ts',
-  },
   // Don't block publishing or preview deploys on errors if the emitted JS is valid
   typescript: {
     ignoreBuildErrors: true,
@@ -76,4 +71,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default nextConfig

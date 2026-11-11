@@ -1,7 +1,6 @@
 'use server'
 
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getSupabaseServerClient } from '@/lib/supabase/server'
 
 type NewsletterResult = { ok: boolean; message: string }
 
@@ -14,23 +13,22 @@ export async function subscribeToNewsletter(emailInput: string): Promise<Newslet
   }
 
   try {
-    const payload = await getPayload({ config: await config })
-    const existing = await payload.find({
-      collection: 'newsletter-subscriptions' as never,
-      where: { email: { equals: email } },
-      limit: 1,
-      overrideAccess: false,
-    })
+    const client = getSupabaseServerClient()
+    const { data: existing, error: lookupError } = await client
+      .from('newsletter_subscriptions')
+      .select('id')
+      .eq('email', email)
+      .maybeSingle()
+    if (lookupError) throw lookupError
 
-    if (existing.docs.length) {
+    if (existing) {
       return { ok: true, message: 'You are already on the list.' }
     }
 
-    await payload.create({
-      collection: 'newsletter-subscriptions' as never,
-      data: { email, source: 'home' } as never,
-      overrideAccess: false,
-    })
+    const { error } = await client
+      .from('newsletter_subscriptions')
+      .insert({ email, source: 'home' })
+    if (error) throw error
     return { ok: true, message: 'You are on the list. Thanks for subscribing.' }
   } catch (error) {
     console.error('Newsletter subscription failed', error)
