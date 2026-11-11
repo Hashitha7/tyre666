@@ -120,7 +120,7 @@ const tyreAnatomy = [
     description:
       'High-dispersion silica compound delivering razor-sharp wet braking, reduced rolling resistance, and heat endurance under blistering Australian tarmac conditions.',
     specs: '60,000+ km longevity · Wet Grip Rating: A',
-    image: '/images/hero-tyre.jpg',
+    image: '/images/hero-tyre.webp',
     tag: 'Macro Tread Grip & Compound',
   },
   {
@@ -131,7 +131,7 @@ const tyreAnatomy = [
     description:
       'Dual high-tensile brass-coated steel belts providing structural rigidity, high-speed centrifugal resistance, and puncture shielding against road debris.',
     specs: 'High Lateral G-Stability · Y-Speed Rated (300 km/h)',
-    image: '/images/brand-velocity.jpg',
+    image: '/images/brand-velocity.webp',
     tag: 'High-Tensile Steel Radial Structure',
   },
   {
@@ -142,7 +142,7 @@ const tyreAnatomy = [
     description:
       'Reinforced multi-ply casing engineered to absorb heavy outback potholes, gutter rash, and rugged gravel impacts without internal ply separation.',
     specs: 'Cut & Chip Resistant Rubber · Anti-Pinch Shielding',
-    image: '/images/brand-grit.jpg',
+    image: '/images/brand-grit.webp',
     tag: 'Rugged Anti-Puncture Sidewall',
   },
   {
@@ -153,7 +153,7 @@ const tyreAnatomy = [
     description:
       'Spiral-wound continuous nylon wrap keeping the tyre contour perfectly round at autobahn and highway speeds for an ultra-quiet, vibration-free ride.',
     specs: 'Acoustic Noise Damping · Uniform Contact Patch',
-    image: '/images/brand-summit.jpg',
+    image: '/images/brand-summit.webp',
     tag: 'Silent Highway Contour Wrap',
   },
   {
@@ -164,7 +164,7 @@ const tyreAnatomy = [
     description:
       'Engineered steel wire bead with firm rubber apex filler, locking the tyre bead securely to the alloy rim even under aggressive lateral track loads.',
     specs: 'Air-Tight Bead Seat · Zero Wheel Slippage',
-    image: '/images/brand-nocturne.jpg',
+    image: '/images/brand-nocturne.webp',
     tag: 'Forged Rim & Bead Lock Interface',
   },
 ]

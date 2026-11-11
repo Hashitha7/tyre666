@@ -17,7 +17,7 @@ export const demoProducts: TyreProduct[] = [
     price: 329,
     compareAtPrice: 399,
     available: true,
-    image: '/images/brand-apex.jpg',
+    image: '/images/brand-apex.webp',
     description:
       'Ultra-high-performance motorsport racing tyre engineered for lateral G-stability, track agility, and instant steering response.',
     variantId: 'demo-variant-1',
@@ -37,7 +37,7 @@ export const demoProducts: TyreProduct[] = [
     price: 289,
     compareAtPrice: 349,
     available: true,
-    image: '/images/brand-outland.jpg',
+    image: '/images/brand-outland.webp',
     description:
       'All-terrain expedition tyre designed for Australian red dust, rocky climbs, and highway touring with heavy load capacity.',
     variantId: 'demo-variant-2',
@@ -57,7 +57,7 @@ export const demoProducts: TyreProduct[] = [
     price: 249,
     compareAtPrice: 299,
     available: true,
-    image: '/images/brand-velocity.jpg',
+    image: '/images/brand-velocity.webp',
     description:
       'High-speed sport touring passenger tyre delivering silent highway cruising, rapid wet braking, and responsive steering feel.',
     variantId: 'demo-variant-3',
@@ -77,7 +77,7 @@ export const demoProducts: TyreProduct[] = [
     price: 269,
     compareAtPrice: 319,
     available: true,
-    image: '/images/brand-summit.jpg',
+    image: '/images/brand-summit.webp',
     description:
       'Luxury SUV and crossover touring tyre engineered for stable tracking, quiet family comfort, and long-lasting tread wear.',
     variantId: 'demo-variant-4',
@@ -97,7 +97,7 @@ export const demoProducts: TyreProduct[] = [
     price: 389,
     compareAtPrice: 469,
     available: true,
-    image: '/images/brand-grit.jpg',
+    image: '/images/brand-grit.webp',
     description:
       'Brutal mud-terrain tyre featuring Kevlar-reinforced 3-ply sidewalls and stone ejectors to conquer extreme off-road bogs.',
     variantId: 'demo-variant-5',
@@ -117,7 +117,7 @@ export const demoProducts: TyreProduct[] = [
     price: 179,
     compareAtPrice: 209,
     available: false,
-    image: '/images/brand-metro.jpg',
+    image: '/images/brand-metro.webp',
     description:
       'Eco-efficient city commuter tyre with low rolling resistance nano-compound for maximum fuel savings and wet grip.',
     variantId: 'demo-variant-6',
@@ -136,7 +136,7 @@ export const demoProducts: TyreProduct[] = [
     speedRating: 'R',
     price: 309,
     available: true,
-    image: '/images/brand-haul.jpg',
+    image: '/images/brand-haul.webp',
     description:
       'Commercial light truck radial built with steel-belted reinforcements for trades, couriers, and heavy equipment transport.',
     variantId: 'demo-variant-7',
@@ -156,7 +156,7 @@ export const demoProducts: TyreProduct[] = [
     price: 359,
     compareAtPrice: 429,
     available: true,
-    image: '/images/brand-nocturne.jpg',
+    image: '/images/brand-nocturne.webp',
     description:
       'Luxury performance run-flat tyre with self-supporting heat-resistant sidewalls allowing 80 km travel after air loss.',
     variantId: 'demo-variant-8',

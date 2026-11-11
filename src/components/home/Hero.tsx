@@ -106,7 +106,7 @@ export default function Hero() {
               className="relative h-full w-full select-none"
             >
               <Image
-                src="/images/hero-tyre.jpg"
+                src="/images/hero-tyre.webp"
                 alt="TYRES666 Ultra Performance Racing Tyre & Forged Alloy Rim"
                 fill
                 priority
