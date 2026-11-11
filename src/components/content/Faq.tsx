@@ -8,7 +8,7 @@ const items = [
   ],
   [
     'How do I know which tyres fit my vehicle?',
-    'Use verified fitment data, your vehicle placard, and advice from a qualified tyre specialist. Vehicle lookup remains labelled as demo until a fitment provider is connected.',
+    'Submit your make, model, year and variant through the Tyre Finder. The team will verify the fitment before recommending a tyre. We do not guess compatibility.',
   ],
   [
     'What payment methods are accepted?',

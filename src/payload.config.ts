@@ -8,6 +8,7 @@ import { Media } from './collections/Media'
 import { Folders } from './collections/Folders'
 import { Tags } from './collections/Tags'
 import { ContactSubmissions } from './collections/ContactSubmissions'
+import { FitmentRequests } from './collections/FitmentRequests'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +32,7 @@ export default buildFigmaConfig({
     fallbackLanguage: 'en',
     supportedLanguages: { en: adminLanguage },
   },
-  collections: [Admins, Media, Folders, Tags, ContactSubmissions],
+  collections: [Admins, Media, Folders, Tags, ContactSubmissions, FitmentRequests],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
