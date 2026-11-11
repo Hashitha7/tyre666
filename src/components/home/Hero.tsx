@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ShieldCheck, Sparkles } from 'lucide-react'
 import { motion } from 'motion/react'
+import { imageAssets } from '@/lib/image-assets'
 
 export default function Hero() {
   const heroCardRef = useRef<HTMLDivElement>(null)
@@ -106,7 +107,7 @@ export default function Hero() {
               className="relative h-full w-full select-none"
             >
               <Image
-                src="/images/hero-tyre.webp"
+                src={imageAssets.heroTyre}
                 alt="TYRES666 Ultra Performance Racing Tyre & Forged Alloy Rim"
                 fill
                 priority
