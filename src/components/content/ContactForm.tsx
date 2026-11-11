@@ -67,7 +67,10 @@ export default function ContactForm() {
         {pending ? 'SENDING...' : 'SEND ENQUIRY'}
       </button>
       {result && (
-        <p className={`sm:col-span-2 text-center text-xs ${result.ok ? 'text-race' : 'text-red-300'}`}>
+        <p
+          aria-live="polite"
+          className={`sm:col-span-2 text-center text-xs ${result.ok ? 'text-race' : 'text-red-300'}`}
+        >
           {result.message}
         </p>
       )}

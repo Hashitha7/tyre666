@@ -6,8 +6,8 @@ export default function Page() {
   return (
     <ContentPage eyebrow="Support" title="Talk tyres.">
       <p>
-        Verified phone, email, location and service hours have not yet been supplied. Add approved
-        business contact information before publishing.
+        Have a question about tyres, fitment or delivery? Send us an enquiry and our support team
+        will get back to you.
       </p>
       <ContactForm />
     </ContentPage>
