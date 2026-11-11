@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, Search, ShoppingBag, X, Heart } from 'lucide-react'
+import { Menu, Search, ShoppingBag, X, Heart, UserRound } from 'lucide-react'
 import { useStorefront } from '@/store/storefront'
 
 const links = [
@@ -43,6 +43,13 @@ export default function Header() {
             className="grid size-10 place-items-center rounded-full hover:bg-white/10"
           >
             <Search size={18} />
+          </Link>
+          <Link
+            href="/account"
+            aria-label="Customer account"
+            className="hidden size-10 place-items-center rounded-full hover:bg-white/10 sm:grid"
+          >
+            <UserRound size={18} />
           </Link>
           <Link
             href="/shop?wishlist=true"
