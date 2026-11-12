@@ -292,10 +292,13 @@ export default function Header() {
         <div
           ref={mobileNavRef}
           style={{
-            overflow: 'hidden',
-            maxHeight: open ? 500 : 0,
+            overflowX: 'hidden',
+            overflowY: open ? 'auto' : 'hidden',
+            maxHeight: open ? `calc(100dvh - ${scrolled ? 56 : 70}px)` : 0,
             transition: 'max-height 0.4s cubic-bezier(0.4,0,0.2,1)',
             borderTop: open ? '1px solid rgba(255,255,255,0.07)' : 'none',
+            WebkitOverflowScrolling: 'touch',
+            overscrollBehavior: 'contain',
           }}
           className="xl:hidden"
         >
