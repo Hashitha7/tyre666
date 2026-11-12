@@ -107,7 +107,6 @@ export default function Header() {
             <nav
               style={{
                 marginLeft: 'auto',
-                display: 'flex',
                 alignItems: 'center',
                 gap: '0.25rem',
               }}
